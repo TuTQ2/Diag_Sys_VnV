@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Test / build artifacts
+.pytest_cache/
+reports/
+robot_reports/
+.coverage
+coverage.xml
+htmlcov/
+
+# IDE / Editor
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
