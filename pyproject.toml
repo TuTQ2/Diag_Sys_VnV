@@ -1,0 +1,9 @@
+[project]
+name = "ecu-diagnostic-sim"
+version = "0.2.0"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

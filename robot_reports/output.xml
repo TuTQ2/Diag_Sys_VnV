@@ -1,0 +1,1358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20260102 09:02:47.199" rpa="false" schemaversion="4">
+<suite id="s1" name="Robot" source="E:\00_Study\00_Study\CI_CT\robot">
+<suite id="s1-s1" name="Uds Negative" source="E:\00_Study\00_Study\CI_CT\robot\uds_negative.robot">
+<test id="s1-s1-t1" name="Unknown SID Should Return NRC 31" line="5">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>99 00</arg>
+<arg>7F 99 31</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:47.436" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:47.436" endtime="20260102 09:02:47.436"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:47.436" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '99 00', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:47.436" endtime="20260102 09:02:47.436"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:47.436" endtime="20260102 09:02:47.436"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:47.436" endtime="20260102 09:02:47.436"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:47.436" endtime="20260102 09:02:47.436"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:47.436" endtime="20260102 09:02:47.436"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:47.436" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "99 00" --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:47.452" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:47.676" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:47.676" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:47.436" endtime="20260102 09:02:47.676"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:47.696" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:47.676" endtime="20260102 09:02:47.696"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:47.696" level="INFO">${out} = 7F 99 31</msg>
+<status status="PASS" starttime="20260102 09:02:47.696" endtime="20260102 09:02:47.696"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:47.696" level="INFO">${out} = 7F 99 31</msg>
+<status status="PASS" starttime="20260102 09:02:47.696" endtime="20260102 09:02:47.696"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:47.696" endtime="20260102 09:02:47.700"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:47.436" endtime="20260102 09:02:47.700"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:47.436" endtime="20260102 09:02:47.700"/>
+</test>
+<test id="s1-s1-t2" name="Session Control Wrong Length Should Return NRC 13" line="8">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>10</arg>
+<arg>7F 10 13</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:47.700" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:47.700" endtime="20260102 09:02:47.700"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:47.700" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '10', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:47.700" endtime="20260102 09:02:47.700"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:47.700" endtime="20260102 09:02:47.700"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:47.700" endtime="20260102 09:02:47.700"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:47.700" endtime="20260102 09:02:47.700"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:47.700" endtime="20260102 09:02:47.700"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:47.700" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli 10 --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:47.700" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:47.851" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:47.851" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:47.700" endtime="20260102 09:02:47.851"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:47.867" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:47.851" endtime="20260102 09:02:47.867"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:47.880" level="INFO">${out} = 7F 10 13</msg>
+<status status="PASS" starttime="20260102 09:02:47.880" endtime="20260102 09:02:47.880"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:47.880" level="INFO">${out} = 7F 10 13</msg>
+<status status="PASS" starttime="20260102 09:02:47.880" endtime="20260102 09:02:47.880"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:47.880" endtime="20260102 09:02:47.882"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:47.700" endtime="20260102 09:02:47.882"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:47.700" endtime="20260102 09:02:47.883"/>
+</test>
+<test id="s1-s1-t3" name="Session Control Unsupported Session Should Return NRC 31" line="11">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>10 99</arg>
+<arg>7F 10 31</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:47.885" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:47.885" endtime="20260102 09:02:47.885"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:47.885" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '10 99', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:47.885" endtime="20260102 09:02:47.885"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:47.885" endtime="20260102 09:02:47.885"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:47.885" endtime="20260102 09:02:47.885"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:47.885" endtime="20260102 09:02:47.885"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:47.885" endtime="20260102 09:02:47.885"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:47.885" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "10 99" --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:47.885" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:48.038" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:48.038" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:47.885" endtime="20260102 09:02:48.038"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:48.050" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.038" endtime="20260102 09:02:48.050"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.050" level="INFO">${out} = 7F 10 31</msg>
+<status status="PASS" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.050"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.050" level="INFO">${out} = 7F 10 31</msg>
+<status status="PASS" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.050"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.050"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:47.885" endtime="20260102 09:02:48.050"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:47.883" endtime="20260102 09:02:48.050"/>
+</test>
+<test id="s1-s1-t4" name="Read DID Wrong Length Should Return NRC 13" line="14">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>22 F1</arg>
+<arg>7F 22 13</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:48.050" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.050"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:48.050" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '22 F1', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.050"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.050"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.050"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.050"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.050"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:48.050" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "22 F1" --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:48.071" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:48.209" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:48.209" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.209"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:48.224" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.209" endtime="20260102 09:02:48.224"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.224" level="INFO">${out} = 7F 22 13</msg>
+<status status="PASS" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.224"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.224" level="INFO">${out} = 7F 22 13</msg>
+<status status="PASS" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.224"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.224"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.224"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.050" endtime="20260102 09:02:48.224"/>
+</test>
+<test id="s1-s1-t5" name="Read DID Unsupported DID Should Return NRC 31" line="17">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>22 12 34</arg>
+<arg>7F 22 31</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:48.224" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.224"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:48.224" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '22 12 34', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.224"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.224"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.224"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.224"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.224"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:48.239" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "22 12 34" --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:48.250" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:48.384" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:48.384" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.384"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:48.406" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.384" endtime="20260102 09:02:48.406"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.406" level="INFO">${out} = 7F 22 31</msg>
+<status status="PASS" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.406"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.406" level="INFO">${out} = 7F 22 31</msg>
+<status status="PASS" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.406"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.406"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.406"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.224" endtime="20260102 09:02:48.406"/>
+</test>
+<test id="s1-s1-t6" name="Write DID Wrong Length Should Return NRC 13" line="20">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>2E F1 87</arg>
+<arg>7F 2E 13</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:48.406" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.406"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:48.406" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '2E F1 87', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.406"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.406"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.406"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.406"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.406"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:48.406" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "2E F1 87" --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:48.424" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:48.550" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:48.550" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.550"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:48.565" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.550" endtime="20260102 09:02:48.565"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.565" level="INFO">${out} = 7F 2E 13</msg>
+<status status="PASS" starttime="20260102 09:02:48.565" endtime="20260102 09:02:48.565"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.565" level="INFO">${out} = 7F 2E 13</msg>
+<status status="PASS" starttime="20260102 09:02:48.565" endtime="20260102 09:02:48.565"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:48.565" endtime="20260102 09:02:48.581"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.581"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.406" endtime="20260102 09:02:48.581"/>
+</test>
+<test id="s1-s1-t7" name="Write DID Unsupported DID Should Return NRC 31" line="23">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>2E 12 34 01</arg>
+<arg>7F 2E 31</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:48.581" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:48.581" endtime="20260102 09:02:48.581"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:48.581" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '2E 12 34 01', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:48.581" endtime="20260102 09:02:48.581"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.581" endtime="20260102 09:02:48.581"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.581" endtime="20260102 09:02:48.581"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:48.581" endtime="20260102 09:02:48.581"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:48.581" endtime="20260102 09:02:48.581"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:48.581" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "2E 12 34 01" --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:48.591" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:48.730" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:48.730" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.581" endtime="20260102 09:02:48.730"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:48.741" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.730" endtime="20260102 09:02:48.741"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.741" level="INFO">${out} = 7F 2E 31</msg>
+<status status="PASS" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.741"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.741" level="INFO">${out} = 7F 2E 31</msg>
+<status status="PASS" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.741"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.741"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.581" endtime="20260102 09:02:48.741"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.581" endtime="20260102 09:02:48.741"/>
+</test>
+<test id="s1-s1-t8" name="ECU Reset Wrong Length Should Return NRC 13" line="26">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>11</arg>
+<arg>7F 11 13</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:48.741" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.741"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:48.741" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '11', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.741"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.741"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.741"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.741"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.741"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:48.741" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli 11 --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:48.757" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:48.886" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:48.886" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.886"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:48.911" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.886" endtime="20260102 09:02:48.911"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.911" level="INFO">${out} = 7F 11 13</msg>
+<status status="PASS" starttime="20260102 09:02:48.911" endtime="20260102 09:02:48.911"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:48.911" level="INFO">${out} = 7F 11 13</msg>
+<status status="PASS" starttime="20260102 09:02:48.911" endtime="20260102 09:02:48.911"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:48.911" endtime="20260102 09:02:48.911"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.911"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.741" endtime="20260102 09:02:48.911"/>
+</test>
+<test id="s1-s1-t9" name="ECU Reset Positive Response" line="29">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>11 01</arg>
+<arg>51 01</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:48.911" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:48.911" endtime="20260102 09:02:48.911"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:48.911" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '11 01', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:48.911" endtime="20260102 09:02:48.911"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.911" endtime="20260102 09:02:48.911"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:48.911" endtime="20260102 09:02:48.911"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:48.911" endtime="20260102 09:02:48.911"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:48.911" endtime="20260102 09:02:48.911"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:48.911" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "11 01" --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:48.925" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:49.049" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:49.049" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:48.911" endtime="20260102 09:02:49.049"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:49.065" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:49.049" endtime="20260102 09:02:49.065"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.065" level="INFO">${out} = 51 01</msg>
+<status status="PASS" starttime="20260102 09:02:49.065" endtime="20260102 09:02:49.065"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.065" level="INFO">${out} = 51 01</msg>
+<status status="PASS" starttime="20260102 09:02:49.065" endtime="20260102 09:02:49.065"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:49.065" endtime="20260102 09:02:49.065"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.911" endtime="20260102 09:02:49.065"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:48.911" endtime="20260102 09:02:49.065"/>
+</test>
+<test id="s1-s1-t10" name="Clear DTC Wrong Length Should Return NRC 13" line="32">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>14 FF</arg>
+<arg>7F 14 13</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:49.065" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:49.065" endtime="20260102 09:02:49.065"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:49.081" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '14 FF', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:49.065" endtime="20260102 09:02:49.081"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:49.081" endtime="20260102 09:02:49.081"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:49.081" endtime="20260102 09:02:49.081"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:49.081" endtime="20260102 09:02:49.081"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:49.081" endtime="20260102 09:02:49.081"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:49.081" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "14 FF" --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:49.083" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:49.228" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:49.228" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:49.081" endtime="20260102 09:02:49.228"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:49.245" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:49.228" endtime="20260102 09:02:49.245"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.247" level="INFO">${out} = 7F 14 13</msg>
+<status status="PASS" starttime="20260102 09:02:49.245" endtime="20260102 09:02:49.247"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.247" level="INFO">${out} = 7F 14 13</msg>
+<status status="PASS" starttime="20260102 09:02:49.247" endtime="20260102 09:02:49.247"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:49.247" endtime="20260102 09:02:49.249"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.065" endtime="20260102 09:02:49.249"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.065" endtime="20260102 09:02:49.249"/>
+</test>
+<status status="PASS" starttime="20260102 09:02:47.243" endtime="20260102 09:02:49.249"/>
+</suite>
+<suite id="s1-s2" name="Uds System" source="E:\00_Study\00_Study\CI_CT\robot\uds_system.robot">
+<test id="s1-s2-t1" name="Session Control Should Switch To Extended" line="5">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>10 03</arg>
+<arg>50 03</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:49.257" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:49.257" endtime="20260102 09:02:49.257"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:49.257" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '10 03', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:49.257" endtime="20260102 09:02:49.257"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:49.259" endtime="20260102 09:02:49.260"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:49.260" endtime="20260102 09:02:49.260"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:49.259" endtime="20260102 09:02:49.260"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:49.257" endtime="20260102 09:02:49.260"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:49.262" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "10 03" --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:49.263" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:49.410" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:49.410" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:49.260" endtime="20260102 09:02:49.410"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:49.418" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:49.410" endtime="20260102 09:02:49.418"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.418" level="INFO">${out} = 50 03</msg>
+<status status="PASS" starttime="20260102 09:02:49.418" endtime="20260102 09:02:49.418"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.418" level="INFO">${out} = 50 03</msg>
+<status status="PASS" starttime="20260102 09:02:49.418" endtime="20260102 09:02:49.418"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:49.418" endtime="20260102 09:02:49.418"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.249" endtime="20260102 09:02:49.418"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.249" endtime="20260102 09:02:49.434"/>
+</test>
+<test id="s1-s2-t2" name="Read DID VIN Should Return Exact Payload" line="8">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>22 F1 90</arg>
+<arg>62 F1 90 56 49 4E 3A 54 45 53 54 56 49 4E 30 30 30 30 30 30 30 30 31</arg>
+<arg>12.0</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:49.434" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:49.434" endtime="20260102 09:02:49.434"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:49.434" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '22 F1 90', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:49.434" endtime="20260102 09:02:49.434"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}"/>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:49.434" endtime="20260102 09:02:49.434"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20260102 09:02:49.434" endtime="20260102 09:02:49.434"/>
+</kw>
+<status status="NOT RUN" starttime="20260102 09:02:49.434" endtime="20260102 09:02:49.434"/>
+</iter>
+<status status="NOT RUN" starttime="20260102 09:02:49.434" endtime="20260102 09:02:49.434"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:49.434" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "22 F1 90" --voltage 12.0</msg>
+<msg timestamp="20260102 09:02:49.444" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:49.583" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:49.583" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:49.434" endtime="20260102 09:02:49.583"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:49.601" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:49.583" endtime="20260102 09:02:49.601"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.601" level="INFO">${out} = 62 F1 90 56 49 4E 3A 54 45 53 54 56 49 4E 30 30 30 30 30 30 30 30 31</msg>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.601"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.601" level="INFO">${out} = 62 F1 90 56 49 4E 3A 54 45 53 54 56 49 4E 30 30 30 30 30 30 30 30 31</msg>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.601"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.601"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.434" endtime="20260102 09:02:49.601"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.434" endtime="20260102 09:02:49.601"/>
+</test>
+<test id="s1-s2-t3" name="Clear DTC Should Work When Voltage In 0..5V" line="13">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>14 FF FF FF</arg>
+<arg>54 FF FF FF</arg>
+<arg>3.3</arg>
+<arg>B122021</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:49.601" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.601"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:49.601" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '14 FF FF FF', '--voltage', '3.3']</msg>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.601"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}">B122021</var>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.601"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.601"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.601"/>
+</iter>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.601"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:49.601" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "14 FF FF FF" --voltage 3.3 --seed-dtc B122021</msg>
+<msg timestamp="20260102 09:02:49.615" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:49.761" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:49.761" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.761"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:49.775" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:49.761" endtime="20260102 09:02:49.775"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.775" level="INFO">${out} = 54 FF FF FF</msg>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.775"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.775" level="INFO">${out} = 54 FF FF FF</msg>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.775"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.775"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.775"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.601" endtime="20260102 09:02:49.775"/>
+</test>
+<test id="s1-s2-t4" name="Clear DTC Should Be Blocked When Voltage High" line="16">
+<kw name="Run ECU CLI And Expect" library="keywords">
+<arg>14 FF FF FF</arg>
+<arg>7F 14 22</arg>
+<arg>12.0</arg>
+<arg>B122021</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${src_path}</var>
+<arg>E:\\00_Study\\00_Study\\CI_CT\\robot\\resources${/}..${/}..${/}src</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20260102 09:02:49.775" level="INFO">${src_path} = E:\00_Study\00_Study\CI_CT\robot\resources\..\..\src</msg>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.775"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${args}</var>
+<arg>-m</arg>
+<arg>App.Cli.EcuSim_Cli</arg>
+<arg>${req_hex}</arg>
+<arg>--voltage</arg>
+<arg>${voltage}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20260102 09:02:49.775" level="INFO">${args} = ['-m', 'App.Cli.EcuSim_Cli', '14 FF FF FF', '--voltage', '12.0']</msg>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.775"/>
+</kw>
+<for flavor="IN">
+<var>${d}</var>
+<value>@{seed_dtcs}</value>
+<iter>
+<var name="${d}">B122021</var>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>--seed-dtc</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.775"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${args}</arg>
+<arg>${d}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.775"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.775"/>
+</iter>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.775"/>
+</for>
+<kw name="Run Process" library="Process">
+<var>${res}</var>
+<arg>python</arg>
+<arg>@{args}</arg>
+<arg>stdout=PIPE</arg>
+<arg>stderr=PIPE</arg>
+<arg>shell=${False}</arg>
+<arg>env:PYTHONPATH=${src_path}</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20260102 09:02:49.775" level="INFO">Starting process:
+python -m App.Cli.EcuSim_Cli "14 FF FF FF" --voltage 12.0 --seed-dtc B122021</msg>
+<msg timestamp="20260102 09:02:49.775" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20260102 09:02:49.912" level="INFO">Process completed.</msg>
+<msg timestamp="20260102 09:02:49.928" level="INFO">${res} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.928"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${res.rc}</arg>
+<arg>0</arg>
+<arg>msg=CLI failed (rc=${res.rc})\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20260102 09:02:49.944" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20260102 09:02:49.928" endtime="20260102 09:02:49.944"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${res.stdout}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.944" level="INFO">${out} = 7F 14 22</msg>
+<status status="PASS" starttime="20260102 09:02:49.944" endtime="20260102 09:02:49.944"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${out}</var>
+<arg>${out}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20260102 09:02:49.944" level="INFO">${out} = 7F 14 22</msg>
+<status status="PASS" starttime="20260102 09:02:49.944" endtime="20260102 09:02:49.944"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${out}</arg>
+<arg>${expected_hex}</arg>
+<arg>msg=Output mismatch\nSTDERR:\n${res.stderr}\nSTDOUT:\n${res.stdout}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20260102 09:02:49.944" endtime="20260102 09:02:49.944"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.944"/>
+</kw>
+<status status="PASS" starttime="20260102 09:02:49.775" endtime="20260102 09:02:49.944"/>
+</test>
+<status status="PASS" starttime="20260102 09:02:49.249" endtime="20260102 09:02:49.944"/>
+</suite>
+<status status="PASS" starttime="20260102 09:02:47.212" endtime="20260102 09:02:49.944"/>
+</suite>
+<statistics>
+<total>
+<stat pass="14" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="14" fail="0" skip="0" id="s1" name="Robot">Robot</stat>
+<stat pass="10" fail="0" skip="0" id="s1-s1" name="Uds Negative">Robot.Uds Negative</stat>
+<stat pass="4" fail="0" skip="0" id="s1-s2" name="Uds System">Robot.Uds System</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
