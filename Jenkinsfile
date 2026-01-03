@@ -21,14 +21,6 @@ pipeline {
     stage('Setup Python venv') {
       steps {
         script {
-          if (isUnix()) {
-            sh '''
-              python3 -m venv .venv
-              . .venv/bin/activate
-              python -m pip install --upgrade pip
-              pip install -r requirements-dev.txt
-            '''
-          } else {
             bat '''
               rem Prefer Windows Python Launcher (py); fallback to python
               where py >nul 2>&1
@@ -41,7 +33,6 @@ pipeline {
               python -m pip install --upgrade pip
               pip install -r requirements-dev.txt
             '''
-          }
         }
       }
     }
@@ -49,19 +40,11 @@ pipeline {
     stage('Unit tests (pytest)') {
       steps {
         script {
-          if (isUnix()) {
-            sh '''
-              . .venv/bin/activate
-              mkdir -p reports
-              pytest -q --junitxml=reports/pytest-junit.xml
-            '''
-          } else {
             bat '''
               call .venv\\Scripts\\activate
               if not exist reports mkdir reports
               pytest -q --junitxml=reports\\pytest-junit.xml
             '''
-          }
         }
       }
     }
@@ -69,19 +52,11 @@ pipeline {
     stage('System tests (Robot Framework)') {
       steps {
         script {
-          if (isUnix()) {
-            sh '''
-              . .venv/bin/activate
-              mkdir -p robot_reports
-              robot -d robot_reports --xunit robot_reports/robot-xunit.xml robot
-            '''
-          } else {
             bat '''
               call .venv\\Scripts\\activate
               if not exist robot_reports mkdir robot_reports
               robot -d robot_reports --xunit robot_reports\\robot-xunit.xml robot
             '''
-          }
         }
       }
     }
