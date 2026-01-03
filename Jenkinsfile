@@ -72,14 +72,14 @@ pipeline {
 
       // Publish Robot HTML (requires HTML Publisher plugin). If plugin is missing,
       // Jenkins will show a clear error; you can remove this block if needed.
-      publishHTML(target: [
-        allowMissing: true,
-        alwaysLinkToLastBuild: true,
-        keepAll: true,
-        reportDir: 'robot_reports',
-        reportFiles: 'report.html,log.html',
-        reportName: 'Robot Framework Report'
-      ])
+      // publishHTML(target: [
+      //   allowMissing: true,
+      //   alwaysLinkToLastBuild: true,
+      //   keepAll: true,
+      //   reportDir: 'robot_reports',
+      //   reportFiles: 'report.html,log.html',
+      //   reportName: 'Robot Framework Report'
+      // ])
     }
   }
 }
